@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.to-do-container{
+    border: solid gray 1px;
+}
+.container-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.completed-button{
+    height: 20px;
+    border-radius: 5px;
+}
+
+td {
+    border: solid 1px black;
+    border-radius: 7px;
+}
