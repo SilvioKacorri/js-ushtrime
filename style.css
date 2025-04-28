@@ -1,0 +1,66 @@
+.container {
+    background-image: url(blackjack_table_cover.jpg);
+    width: 612px;
+    height: 408px;
+    background-repeat: no-repeat;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+    border: solid 30px #964B00;
+
+    position: relative;
+    left: 25%;
+    top: 100px;
+}
+.cards{
+    height: 100px;
+    width: 70px;
+}
+#dealer-hand{
+    width: 100px;
+    height: 100px;
+    
+    position: relative;
+    left: 42.5%;
+    bottom: 30px;  
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#player-hand{
+    width: 100px;
+    height: 100px;
+
+    position: relative;
+    top: 55%;
+    left: 42.5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-container{
+
+}
+#dealer-hand-number{
+    width: 100px;
+
+    position: relative;
+    left: 48%;
+    bottom: 20px;
+
+    color: white;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#player-hand-number{
+    width: 100px;
+
+    position: relative;
+    left: 48%;
+    top: 85px;
+
+    color: white;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
