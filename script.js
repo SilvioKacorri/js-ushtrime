@@ -56,7 +56,7 @@ function evaluateCards(card){
         if (card == "J"){
             return 10;
         }
-        if ( cards == "Q"){
+        if (card == "Q"){
             return 10;
         }
         if (card== "K"){
@@ -78,6 +78,11 @@ function calculatePlayer1Hand(){
     for (let i in playerCards){
         console.log(evaluateCards(playerCards[i]));
         count = parseInt(count + evaluateCards(playerCards[i]));
+    }
+    if (count >= 12) {
+        if (playerCards.includes("A")) {
+            console.log("1")
+        }
     }
     player1Display.textContent = count;
 };
