@@ -1,3 +1,18 @@
+body {
+    background-image: url(casino-background3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
 .container {
     background-image: url(blackjack_table_cover.jpg);
     width: 612px;
@@ -5,10 +20,11 @@
     background-repeat: no-repeat;
     border-bottom-left-radius: 100%;
     border-bottom-right-radius: 100%;
-    border: solid 30px #964B00;
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
+    border: solid 30px #000000;
 
-    position: relative;
-    left: 25%;
+    left: 33%;
     top: 100px;
 }
 .cards{
@@ -21,7 +37,9 @@
     
     position: relative;
     left: 42.5%;
-    bottom: 45px;  
+    bottom: 45px;
+    
+    gap: 10px;
 
     display: flex;
     align-items: center;
@@ -35,13 +53,55 @@
     top: 55%;
     left: 42.5%;
 
+    gap: 10px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .button-container{
-
+    padding: 40px;
 }
+#hit{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 5px black;
+    box-sizing: content-box;
+    background-color: gray;
+
+    font-size: 32px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+#hit:disabled {
+    opacity: 0.5;
+}
+
+
+#stand{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 5px black;
+    box-sizing: content-box;
+    background-color: gray;
+
+    font-size: 32px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+#stand:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+
 #dealer-hand-number{
     width: 100px;
 
@@ -64,3 +124,5 @@
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+    

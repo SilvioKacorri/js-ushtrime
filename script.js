@@ -12,25 +12,27 @@ let playerHand = document.getElementById("player-hand");
 // }, 3000 )
 
 function randomCard(){
-    return cards[Math.floor( Math.random() * cards.length) ];
+    return cards[Math.floor( Math.random() * cards.length ) ];
 };
 
 let dealerCards = [];
 let playerCards = [];
 
+let gameCount = 0;
+let winCount = 0;
+
+let dealerBust = false;
+let playerBust = false;
+let blackjack = false;
+
 
 function dealHand() {
     for (i = 0 ; i < 2; i++){
         dealerCards.push(randomCard());
-        let tempInt = randomCard();
+        let tempInt = randomCard();        //2 randomCards te ndyshme ( 2 thirrje funksioni te ndryshme )
         playerCards.push(tempInt);
     }
 }
-
-dealHand();
-
-console.log(playerCards);
-console.log(dealerCards);
 
 function changeDealerCards(){
     dealerHand.innerHTML = '';
@@ -50,19 +52,19 @@ function changePlayerCards(){
         playerHand.append(img);
     }
 }
+function startingHandDealer(){
+    dealerHand.innerHTML = '';
 
-// function changeChards(user){
-//     user.innerHTML = '';
-//     for (let i in user){
-//         let img = document.createElement("img");    nuk mund ta ndryshoj parametrin si funksion , sepse DOM
-//         img.src = `${user[i]}_spades.png`;
-//         img.classList.add("cards");
-//         user.append(img);
-//     }
-// }
+    let img = document.createElement("img");
+    img.src = `${dealerCards[0]}_spades.png`;
+    img.classList.add("cards");
+    dealerHand.append(img);
 
-changeDealerCards();
-changePlayerCards();
+    let img2 = document.createElement("img");
+    img2.src = 'back_card.jpg';
+    img2.classList.add("cards");
+    dealerHand.append(img2);
+}
 
 let flagA = true;
 
@@ -105,86 +107,128 @@ function evaluateHandCount(cards){
     return count;
 };
 
+function clearTable(){
+
+    playerCards = [];
+    dealerCards = [];
+
+    dealHand();
+
+    startingHandDealer();
+    changePlayerCards();
+
+    count = 0;
+    storePlayerCount = evaluateHandCount(playerCards);
+    player1Display.textContent = storePlayerCount;
+    dealerDisplay.textContent = " --"
+    
+    playerBust = false;
+    dealerBust = false;
+    blackjack = false; 
+}
+
+function resetGameCheck() {
+    if(playerBust || blackjack){
+        setTimeout(() => {
+        alert("The house won.");
+            clearTable(); 
+            }, 1000);
+    }
+    if(dealerBust){
+        setTimeout(() => {
+            alert("You won.");
+            clearTable(); 
+            }, 1000);
+    }
+      
+}
+
 // letrat llogariten sapo fillon loja 
+dealHand();
+startingHandDealer();
+changePlayerCards();
+
+if (evaluateHandCount(playerCards) == 21){
+    blackjack = true;
+    resetGameCheck();
+}
+
+console.log(dealerCards);
+
 let storePlayerCount = 0;
-let playerBust = false;
-let dealerBust = false;
+let storeDealerCount = 0;
+
 
 let player1Display = document.getElementById("player-hand-number"); 
 player1Display.textContent = evaluateHandCount(playerCards);
 storePlayerCount = player1Display.textContent;
 
-function resetGame() {
-    if (storePlayerCount >= 21 || playerBust || dealerBust) {
-        playerCards = [];
-        dealerCards = [];
-        dealHand();
-        changeDealerCards();
-        changePlayerCards();
-        player1Display.textContent = evaluateHandCount(playerCards);
-    }
-}
-
-
-if (storePlayerCount == 21){
-    setTimeout ( () => 
-    alert("blackjack") , 800)
-}
-
-function hit(user){
-    user.push(randomCard());
-    let count = evaluateHandCount(user);
-    
-}
-
-
 function hit(){
+
+    const button = document.getElementById("hit");
+    button.disabled = true;
+
     playerCards.push(randomCard());    
-    console.log(playerCards);
     let count = evaluateHandCount (playerCards);
     changePlayerCards();
     player1Display.textContent = count;
     storePlayerCount = count;
-    if ( count > 21 ) { 
+    
+    if(count > 21){
         playerBust = true;
-        setTimeout( () => alert("BUST") , 100 ) 
     }
-    resetGame();   
+    resetGameCheck();
+
+    setTimeout(() => {
+        button.disabled = false; // Re-enable after 1 second
+      }, 1000);
+
 }
 
 function hitDealer(){
     dealerCards.push(randomCard());
     changeDealerCards();
-    resetGame();
 }
 
 
 let dealerDisplay = document.getElementById("dealer-hand-number");
 
 function dealerTurn() {
-    let count = evaluateHandCount(dealerCards);
-
-    console.log(storePlayerCount);
-
-    if (count < 16 || count < storePlayerCount){
+    storeDealerCount = evaluateHandCount(dealerCards);
+    
+    if (storeDealerCount <= 16){
         hitDealer();
-        dealerDisplay.textContent = count;
-
-        setTimeout(dealerTurn, 500);
+        storeDealerCount = evaluateCards(dealerCards);
+        setTimeout( () => dealerTurn() , 500);
     }
     else {
-        dealerDisplay.textContent = count;
+        dealerDisplay.textContent = storeDealerCount;
+    }
+    if (storeDealerCount >= 21){
+        dealerBust = true;
     }
 }
 
 function stand() {
-    let count = evaluateHandCount(dealerCards);
-    dealerDisplay.textContent = count;
+
+    const button = document.getElementById("stand");
+    button.disabled = true;
+    
+    console.log(dealerCards);
+
+    changeDealerCards();
+    storeDealerCount = evaluateHandCount(dealerCards);
+    dealerDisplay.textContent = storeDealerCount;
+    
+    console.log(dealerCards);
 
     dealerTurn();
+
+    resetGameCheck();
+
 }
 
 
 
-// calculatePlayer1Hand();
+
 
