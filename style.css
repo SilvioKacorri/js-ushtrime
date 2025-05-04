@@ -124,5 +124,75 @@ body {
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
 }
+.win-pop-up {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    position: absolute;
+    bottom: 50vh;
+    
+    height: 100px;
+    width: 300px;
+
+    opacity: 80%;
+    background-color: green;
+    z-index: 9999;
+}
+
+.lose-pop-up {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    position: absolute;
+    bottom: 50vh;
+    
+    height: 100px;
+    width: 300px;
+
+    opacity: 80%;
+    background-color: red;
+    z-index: 9999;
+}
+.draw-pop-up {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    position: absolute;
+    bottom: 50vh;
+    
+    height: 100px;
+    width: 400px;
+
+    opacity: 80%;
+    background-color: gray;
+    z-index: 9999;
+}
+
+.win-pop-up p{
+    color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+.lose-pop-up p{
+    color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+.draw-pop-up p{
+    color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+
+
+
+
 
     

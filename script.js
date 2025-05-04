@@ -15,6 +15,89 @@ function randomCard(){
     return cards[Math.floor( Math.random() * cards.length ) ];
 };
 
+const winPopUpContainer = document.createElement("div");
+function winPopUp(){
+    const tempDiv = document.createElement("div");
+    const tempDiv2 = document.createElement("div");
+
+    const text1 = document.createElement("p")
+    const text2 = document.createElement("p")
+    const text3 = document.createElement("p")
+
+    text1.textContent = "You Win"
+    text2.textContent = "Reward"
+    text3.textContent = "300 LEK"
+
+    tempDiv.append(text1);
+    tempDiv2.append(text2);
+    tempDiv2.append(text3);
+
+    winPopUpContainer.classList.add("win-pop-up");
+    winPopUpContainer.append(tempDiv);
+    winPopUpContainer.append(tempDiv2);
+
+    document.body.append(winPopUpContainer); 
+}
+function removeWinPopUp(){
+    winPopUpContainer.innerHTML = '';
+    winPopUpContainer.remove();
+}
+
+const losePopUpContainer = document.createElement("div");
+function losePopUp(){
+    const tempDiv = document.createElement("div");
+    const tempDiv2 = document.createElement("div");
+
+    const text1 = document.createElement("p")
+    const text2 = document.createElement("p")
+    const text3 = document.createElement("p")
+
+    text1.textContent = "You Lose"
+    text2.textContent = "Your bet was"
+    text3.textContent = "300 LEK"
+
+    tempDiv.append(text1);
+    tempDiv2.append(text2);
+    tempDiv2.append(text3);
+
+    losePopUpContainer.classList.add("lose-pop-up");
+    losePopUpContainer.append(tempDiv);
+    losePopUpContainer.append(tempDiv2);
+
+    document.body.append(losePopUpContainer); 
+}
+function removeLosePopUp(){
+    losePopUpContainer.innerHTML = '';
+    losePopUpContainer.remove();
+}
+const drawPopUpContainer = document.createElement("div");
+function drawPopUp(){
+    const tempDiv = document.createElement("div");
+    const tempDiv2 = document.createElement("div");
+
+    const text1 = document.createElement("p")
+    const text2 = document.createElement("p")
+    const text3 = document.createElement("p")
+
+    text1.textContent = "Count is equal , Push"
+    text2.textContent = "Your bet was"
+    text3.textContent = "300 LEK"
+
+    tempDiv.append(text1);
+    tempDiv2.append(text2);
+    tempDiv2.append(text3);
+
+    drawPopUpContainer.classList.add("draw-pop-up");
+    drawPopUpContainer.append(tempDiv);
+    drawPopUpContainer.append(tempDiv2);
+
+    document.body.append(drawPopUpContainer);  
+}
+function removeDrawPopUp(){
+    drawPopUpContainer.innerHTML = '';
+    drawPopUpContainer.remove();
+}
+
 let dealerCards = [];
 let playerCards = [];
 
@@ -128,17 +211,38 @@ function clearTable(){
 }
 
 function resetGameCheck() {
-    if(playerBust || blackjack){
+    if(playerBust){
         setTimeout(() => {
-        alert("The house won.");
+            losePopUp();
             clearTable(); 
-            }, 1000);
+        }, 1000);
+
+        setTimeout(() => {
+            removeLosePopUp();
+        }, 2000);    
     }
+
     if(dealerBust){
         setTimeout(() => {
-            alert("You won.");
+            winPopUp();
             clearTable(); 
-            }, 1000);
+        
+        }, 1000);
+
+        setTimeout(() => {
+            removeWinPopUp();
+        }, 2000);
+    }
+
+    if(blackjack){
+        setTimeout(() => {
+            winPopUp();
+            clearTable();
+        }, 1000);
+
+        setTimeout(() => {
+            removeWinPopUp();
+        }, 200);
     }
       
 }
@@ -227,6 +331,10 @@ function stand() {
     resetGameCheck();
 
 }
+
+
+
+
 
 
 
