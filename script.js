@@ -15,6 +15,79 @@ function randomCard(){
     return cards[Math.floor( Math.random() * cards.length ) ];
 };
 
+
+let dealerBust = false;
+let playerBust = false;
+let blackjack = false;
+
+let betAmout = 0;
+let gameCount = 0;
+let winCount = 0;
+let balance = 0;
+
+
+const statsDisplay = document.getElementById("stats-container");
+let balanceDisplay = document.createElement("p");
+let betDisplay = document.createElement("p");
+let winCountDisplay = document.createElement("p");
+let gameCountDisplay = document.createElement("p");
+let betNumber = document.getElementById("bet-input");
+
+statsDisplay.append(betDisplay, winCountDisplay, gameCountDisplay);
+
+
+function calculateBalance(betAmout){
+    balance = balance - betAmout;
+
+    if (dealerBust){
+        balance = balance + betAmout*2;
+    }
+    if (blackjack){
+        balance = balance + betAmout*2.5;
+    }
+}
+
+function declareBalance(){
+    // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+
+  // Create alert box
+  const alertBox = document.createElement('div');
+  alertBox.className = 'custom-alert';
+
+  const msg = document.createElement('p');
+  msg.textContent = "How much would you like to deposit:";
+
+  const input = document.createElement('input');
+  input.type = 'number';
+  input.style.marginTop = '10px';
+
+  const button = document.createElement('button');
+  button.textContent = 'OK';
+  button.style.marginTop = '10px';
+
+  button.onclick = () => {
+    const value = Number(input.value);
+    document.body.removeChild(alertBox);
+    document.body.removeChild(overlay);
+    if(value <= 0){
+        declareBalance();
+    }
+    balance = value
+};
+
+alertBox.appendChild(msg);
+alertBox.appendChild(input);
+alertBox.appendChild(document.createElement('br'));
+alertBox.appendChild(button);
+
+document.body.appendChild(overlay);
+document.body.appendChild(alertBox);
+
+}
+
+
 const winPopUpContainer = document.createElement("div");
 function winPopUp(){
     const tempDiv = document.createElement("div");
@@ -101,14 +174,6 @@ function removeDrawPopUp(){
 let dealerCards = [];
 let playerCards = [];
 
-let gameCount = 0;
-let winCount = 0;
-
-let dealerBust = false;
-let playerBust = false;
-let blackjack = false;
-
-
 function dealHand() {
     for (i = 0 ; i < 2; i++){
         dealerCards.push(randomCard());
@@ -147,6 +212,23 @@ function startingHandDealer(){
     img2.src = 'back_card.jpg';
     img2.classList.add("cards");
     dealerHand.append(img2);
+}
+
+function blankCards(){
+    playerHand.innerHTML = '';
+    dealerHand.innerHTML = '';
+
+    for (let i = 0; i < 2; i++) {
+        let playerCard = document.createElement("img");
+        playerCard.src = 'back_card.jpg';
+        playerCard.classList.add("cards");
+        playerHand.append(playerCard);
+
+        let dealerCard = document.createElement("img");
+        dealerCard.src = 'back_card.jpg';
+        dealerCard.classList.add("cards");
+        dealerHand.append(dealerCard);
+    }
 }
 
 let flagA = true;
@@ -195,15 +277,10 @@ function clearTable(){
     playerCards = [];
     dealerCards = [];
 
-    dealHand();
-
-    startingHandDealer();
-    changePlayerCards();
+    blankCards();
 
     count = 0;
-    storePlayerCount = evaluateHandCount(playerCards);
-    player1Display.textContent = storePlayerCount;
-    dealerDisplay.textContent = " --"
+
     
     playerBust = false;
     dealerBust = false;
@@ -212,6 +289,7 @@ function clearTable(){
 
 function resetGameCheck() {
     if(playerBust){
+        winCount--;
         setTimeout(() => {
             losePopUp();
             clearTable(); 
@@ -223,6 +301,7 @@ function resetGameCheck() {
     }
 
     if(dealerBust){
+        winCount++;
         setTimeout(() => {
             winPopUp();
             clearTable(); 
@@ -235,6 +314,7 @@ function resetGameCheck() {
     }
 
     if(blackjack){
+        winCount++;
         setTimeout(() => {
             winPopUp();
             clearTable();
@@ -248,9 +328,9 @@ function resetGameCheck() {
 }
 
 // letrat llogariten sapo fillon loja 
-dealHand();
-startingHandDealer();
-changePlayerCards();
+// dealHand();
+// startingHandDealer();
+// changePlayerCards();
 
 if (evaluateHandCount(playerCards) == 21){
     blackjack = true;
@@ -262,10 +342,6 @@ console.log(dealerCards);
 let storePlayerCount = 0;
 let storeDealerCount = 0;
 
-
-let player1Display = document.getElementById("player-hand-number"); 
-player1Display.textContent = evaluateHandCount(playerCards);
-storePlayerCount = player1Display.textContent;
 
 function hit(){
 
@@ -296,6 +372,7 @@ function hitDealer(){
 
 
 let dealerDisplay = document.getElementById("dealer-hand-number");
+let player1Display = document.getElementById("player-hand-number");
 
 function dealerTurn() {
     storeDealerCount = evaluateHandCount(dealerCards);
@@ -329,11 +406,29 @@ function stand() {
     dealerTurn();
 
     resetGameCheck();
-
 }
 
+function deal(){
+    gameCount++;
 
+    dealHand();
+    startingHandDealer();
+    changePlayerCards();
 
+    storePlayerCount = evaluateHandCount(playerCards);
+    storeDealerCount = evaluateHandCount(dealerCards);
+
+    player1Display.textContent = storePlayerCount;
+
+    balanceDisplay.textContent = balance;
+    
+
+    betAmout = parseInt(betNumber.value);
+    betDisplay.textContent = `Bet Amount : ${betAmout}`;
+    winCountDisplay.textContent = `Win Count : ${winCount}`;
+    gameCountDisplay.textContent = `Hands played : ${gameCount}`;
+
+}
 
 
 

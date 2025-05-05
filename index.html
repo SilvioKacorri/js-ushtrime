@@ -29,8 +29,17 @@
         <div id="player-hand-number"> --</div>
     </div>
     <div class="button-container">
-    <button id="hit" onclick="hit()">Hit</button>
-    <button id="stand" onclick="stand()">Stand</button>
+        <div class="button-first-container">
+            <button id="hit" onclick="hit()">Hit</button>
+            <button id="stand" onclick="stand()">Stand</button>
+        </div>
+        <div id="stats-container">
+        
+        </div>
+        <div class="button-second-container">
+            <input id="bet-input" placeholder="00000" type="number">
+            <button id="deal" onclick="deal()">Deal Cards</button>
+        </div>
     </div>
 </body>
 <script src="script.js"></script>

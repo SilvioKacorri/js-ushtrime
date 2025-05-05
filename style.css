@@ -61,6 +61,28 @@ body {
 }
 .button-container{
     padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vh;
+    gap: 20px
+}
+.button-container p{ 
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+.button-first-container{
+    display: flex;
+    align-items: c;
+    justify-content: center;
+    gap: 10px;
+}
+.button-second-container{
+    display: flex;
+    align-items: c;
+    justify-content: center;
+    gap: 10px;
 }
 #hit{
     width: 100px;
@@ -99,8 +121,43 @@ body {
     cursor: not-allowed;
     opacity: 0.5;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#bet-input{
+    background-color: #888; /* gray like the button */
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+    border: 4px solid black;
+    border-radius: 12px;
+    padding: 10px 20px;
+    text-align: center;
+    box-sizing: content-box;
+    width: 100px;
+    height: 50px;
+    padding: 1px 6px;
+}
+#deal{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 5px black;
+    box-sizing: content-box;
+    background-color: gray;
 
+    font-size: 20px;
+    font-weight: bold;
 
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+#stand:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
 
 #dealer-hand-number{
     width: 100px;
@@ -135,8 +192,10 @@ body {
     
     height: 100px;
     width: 300px;
+    border-radius: 20px;
+    opacity: 0.7;
 
-    opacity: 80%;
+
     background-color: green;
     z-index: 9999;
 }
@@ -189,6 +248,25 @@ body {
     font-family: sans-serif;
     font-size: 18px;
 }
+.custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 6px solid #000000;
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
 
 
 
