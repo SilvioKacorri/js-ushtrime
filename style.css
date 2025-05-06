@@ -100,6 +100,7 @@ body {
 }
 #hit:disabled {
     opacity: 0.5;
+    cursor: not-allowed;
 }
 
 
@@ -153,6 +154,10 @@ input::-webkit-inner-spin-button {
 
     cursor: pointer;
     transition: opacity 0.3s ease;
+}
+#deal:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 #stand:disabled {
     cursor: not-allowed;
@@ -267,6 +272,10 @@ input::-webkit-inner-spin-button {
     background: rgba(0,0,0,0.5);
     z-index: 999;
   }
+
+#stats-container p {
+    margin: 1px;
+}
 
 
 
