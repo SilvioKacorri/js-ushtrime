@@ -373,7 +373,9 @@ function resetGameCheck() {
             document.getElementById("deal").disabled = false; 
         }, 15000);
         timeOuts.push(id);
-    }   
+    }
+    
+    document.getElementById("deal").disabled = false;
 }
 let timeOuts = [];
 
@@ -444,9 +446,6 @@ function stand() {
     button.disabled = true;
 
     document.getElementById("hit").disabled = true;
-    setTimeout(() => {
-        document.getElementById("deal").disabled = false;
-    }, 2000);
     
     changeDealerCards();
     storeDealerCount = evaluateHandCount(dealerCards);
@@ -497,8 +496,7 @@ function deal(){
     winCountDisplay.textContent = `Win Count : ${winCount}`;
     gameCountDisplay.textContent = `Hands played : ${gameCount}`;
      
-    clearTimeout(timeOuts);
-    console.log(timeOuts);
+    timeOuts.forEach(clearTimeout);
     }
 
 }
