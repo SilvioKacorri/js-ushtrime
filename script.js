@@ -269,19 +269,24 @@ function evaluateCards(card){
 
 function evaluateHandCount(cards){
     let count = 0;
-    for (let card in cards){
-        count = parseInt(count + evaluateCards(cards[card]));
-    }
-    if (count > 21 && cards.includes("A")) {
-        count = 0;
-        flagA = false;
-        for (let card2 in cards){
-            count = parseInt(count + evaluateCards(cards[card2]));
+    let aceCount = 0;
+
+    for(let card in cards){
+        count = count + evaluateCards(cards[card]);
+        if (cards[card] == "A"){
+            aceCount++;
         }
-        return count;
+        console.log(card);
+    };
+    
+    while (count > 21 && aceCount > 0){
+        count = count - 10;
+        aceCount--
     }
     return count;
-};
+
+}
+
 
 function clearTable(){
     playerCards = [];
@@ -326,47 +331,51 @@ function resetGameCheck() {
 
     if(playerBust){
         winCount--;
-        setTimeout(() => {
-            losePopUp();
+        losePopUp();
+        document.getElementById("deal").disabled = false; 
+        const id = setTimeout(() => {
             clearTable();
-            document.getElementById("deal").disabled = false; 
-        }, 1500);  
+        }, 15000);
+        timeOuts.push(id);  
     }
 
     else if(dealerBust){
         winCount++;
         balance = balance + betAmout*2;
-        setTimeout(() => {
-            winPopUp();
+        winPopUp();
+        const id = setTimeout(() => {
             balanceDisplay.textContent = `Balance : ${balance}`;
             clearTable();
             document.getElementById("deal").disabled = false; 
-        }, 1500);
+        }, 15000);
+        timeOuts.push(id);
     }
 
     else if(blackjack){
         winCount++;
         balance = balance + betAmout*2.5;
         
-        setTimeout(() => {
-            winPopUp()
+        winPopUp()
+        const id = setTimeout(() => {
             balanceDisplay.textContent = `Balance : ${balance}`;
             clearTable();
             document.getElementById("deal").disabled = false; 
-        }, 1500);
+        }, 15000);
+        timeOuts.push(id);
     }
 
     else if (push){
         balance = balance + betAmout;
-        setTimeout(() => {
-            drawPopUp();
+        drawPopUp();
+        const id = setTimeout(() => {
             balanceDisplay.textContent = `Balance : ${balance}`;
             clearTable();
             document.getElementById("deal").disabled = false; 
-        }, 1500);
-    }
-     
+        }, 15000);
+        timeOuts.push(id);
+    }   
 }
+let timeOuts = [];
 
 function removeAllPopups(){
     removeWinPopUp();
@@ -376,8 +385,6 @@ function removeAllPopups(){
 
 function hit(){
 
-    const button = document.getElementById("hit");
-
     playerCards.push(randomCard());    
     storePlayerCount = evaluateHandCount(playerCards);
     changePlayerCards();
@@ -386,13 +393,23 @@ function hit(){
     if(storePlayerCount > 21){
         playerBust = true;
         resetGameCheck();
+        document.getElementById("hit").disabled = true;
+        document.getElementById("stand").disabled = true;
     }
-    document.getElementById("hit").disabled = true;
-    setTimeout(() => {
-        document.getElementById("hit").disabled = false;
-    }, 1495);
+    else {
+        document.getElementById("hit").disabled = true;
+        document.getElementById("stand").disabled = true;
+        setTimeout(() => {
+            document.getElementById("hit").disabled = false;
+            document.getElementById("stand").disabled = false;
+        }, 1495);
 
-
+        if (storePlayerCount == 21){
+            setTimeout(() => {
+              stand();
+         }, 1500);
+        }
+    } 
 }
 
 function hitDealer(){
@@ -425,24 +442,25 @@ function stand() {
 
     const button = document.getElementById("stand");
     button.disabled = true;
-    
-    console.log(dealerCards);
 
+    document.getElementById("hit").disabled = true;
+    setTimeout(() => {
+        document.getElementById("deal").disabled = false;
+    }, 2000);
+    
     changeDealerCards();
     storeDealerCount = evaluateHandCount(dealerCards);
     dealerDisplay.textContent = storeDealerCount;
-    
-    console.log(dealerCards);
 
     dealerTurn();  
 }
 
 function deal(){
 
+    clearTable();
+
     betAmout = parseInt(betNumber.value);
 
-    
-    
     removeAllPopups();
     
     if(isNaN(betAmout) || betAmout > balance){
@@ -478,10 +496,13 @@ function deal(){
     betDisplay.textContent = `Bet Amount : ${betAmout}`;
     winCountDisplay.textContent = `Win Count : ${winCount}`;
     gameCountDisplay.textContent = `Hands played : ${gameCount}`;
-
+     
+    clearTimeout(timeOuts);
+    console.log(timeOuts);
     }
 
 }
+
 
 
 
